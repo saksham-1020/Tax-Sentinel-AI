@@ -1,0 +1,9 @@
+pandas
+numpy
+networkx
+scikit-learn
+matplotlib
+streamlit
+pdfplumber
+openpyxl
+fpdf
