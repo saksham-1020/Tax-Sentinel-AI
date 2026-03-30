@@ -4,7 +4,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import time
 from engine import (generate_smart_data, run_audit_logic, 
-                    generate_audit_summary, extract_data_from_pdf, 
+                    generate_audit_summary, 
                     export_to_pdf, get_live_stream, compute_audit_hash)
 
 # 1. Page Configuration (Pro SaaS Layout)
@@ -105,7 +105,7 @@ with st.sidebar:
     st.title("Sentinel HQ")
     st.markdown("---")
     
-    uploaded_file = st.file_uploader("📂 Ingest Ledger (CSV/PDF)", type=["csv", "pdf"])
+    uploaded_file = st.file_uploader("📂 Ingest Ledger (CSV only)", type=["csv"])
     
     st.markdown("### ⚙️ Engine Protocol")
     is_live = st.sidebar.toggle("⚡ Real-Time Surveillance", value=False)
@@ -132,8 +132,8 @@ if uploaded_file is not None:
                 'nameOrig': 'from','nameDest': 'to','type': 'mode','amount': 'amount','step': 'time_gap'
             })
     else:
-        with st.spinner("Decoding Document Structure..."):
-            raw_data = extract_data_from_pdf(uploaded_file)
+        st.error("❌ PDF not supported in cloud version. Please upload CSV.")
+        st.stop()
 else:
     try:
         raw_data = pd.read_csv("data/paysim_data.csv", nrows=1000)
